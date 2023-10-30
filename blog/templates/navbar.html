@@ -8,6 +8,11 @@
       <div class="navbar-nav">
         <a class="nav-link" href="{{ url_for('user.user_list') }}">User</a>
         <a class="nav-link" href="{{ url_for('article.article_list') }}">Articls</a>
+        {% if current_user.is_authenticated %}
+          <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+        {% else %}
+          <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+        {% endif %}
       </div>
     </div>
   </div>

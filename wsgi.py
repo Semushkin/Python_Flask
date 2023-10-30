@@ -1,4 +1,5 @@
-from blog.app import create_app
+from blog.app import create_app, db
+from werkzeug.security import generate_password_hash
 
 # if __name__ == '__main__':
 #     app.run(
@@ -7,4 +8,19 @@ from blog.app import create_app
 #     )
 
 app = create_app()
-app.run()
+# app.run()
+
+
+@app.cli.command('init-db')
+def init_db():
+    db.create_all()
+
+
+@app.cli.command('create-users')
+def create_users():
+    from blog.models import User
+
+    db.session.add(
+        User(username='Ivan', password=generate_password_hash('test123'))
+    )
+    db.session.commit()
