@@ -13,6 +13,11 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255))
     email = db.Column(db.String(255), nullable=False, default='', server_default='')
 
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = password
+
 
 # class Article(db.Model):
 #     __tablename__ = 'Article'

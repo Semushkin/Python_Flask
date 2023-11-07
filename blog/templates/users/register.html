@@ -2,7 +2,7 @@
 {% from "macro/formhelpers.html" import render_field %}
 
 {% block title %}
-    Login page
+    User register
 {% endblock %}
 
 {% block body %}
@@ -15,7 +15,7 @@
     {% endif %}
     <form method="post">
         {{ form.csrf_token }}
-        {% for field in ['username', 'password'] %}
+        {% for field in ['username', 'email', 'password', 'confirm_password'] %}
             {{ render_field(form[field]) }}
         {% endfor %}
 
