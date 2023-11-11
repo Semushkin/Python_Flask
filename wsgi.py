@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash
 #     )
 
 app = create_app()
-# app.run()
+app.run()
 
 
 # @app.cli.command('init-db')

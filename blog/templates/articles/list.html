@@ -7,8 +7,8 @@
 {% block body %}
     <h1>Articles:</h1>
     <ul>
-    {% for article_id in articles %}
-        <li><a href="{{ url_for('article.get_article', pk=article_id) }}">{{ articles[article_id]['title'] }}</a></li>
+    {% for article in articles %}
+        <li><a href="{{ url_for('article.article_detail', article_id=article.id) }}">{{ article.title }}  ({{ article.author.user.username }})</a></li>
     {% endfor %}
     </ul>
 {% endblock %}

@@ -27,11 +27,15 @@ def register_blueprints(app: Flask):
     from blog.auth.views import auth
     from blog.user.views import user
     from blog.main.views import main
+    from blog.author.views import author
+    from blog.article.views import article
 
     app.register_blueprint(user)
     app.register_blueprint(article)
     app.register_blueprint(main)
     app.register_blueprint(auth)
+    app.register_blueprint(author)
+    app.register_blueprint(article)
 
 
 def register_extensions(app):
