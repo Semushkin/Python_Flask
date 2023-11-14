@@ -1,11 +1,18 @@
 from datetime import datetime
 
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey
-
-# from blog.app import db
+from sqlalchemy import ForeignKey, Table
 from sqlalchemy.orm import relationship
+
 from blog.extentions import db
+
+
+article_tag_associations_table = Table(
+    'article_tag_associations',
+    db.metadata,
+    db.Column('article_id', db.Integer, ForeignKey('Article.id'), nullable=False),
+    db.Column('tag_id', db.Integer, ForeignKey('Tag.id'), nullable=False),
+)
 
 
 class User(db.Model, UserMixin):
@@ -45,3 +52,14 @@ class Article(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     author = relationship('Author', back_populates='article')
+    tags = relationship('Tag', secondary=article_tag_associations_table, back_populates='article')
+
+
+class Tag(db.Model):
+    __tablename__ = 'Tag'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+
+    article = relationship('Article', secondary=article_tag_associations_table, back_populates='tags')
+
