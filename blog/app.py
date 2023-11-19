@@ -4,7 +4,7 @@ from flask import Flask, request, g
 # from flask_login import LoginManager
 # from flask_sqlalchemy import SQLAlchemy
 from blog.models import User
-from blog.extentions import login_manager, db, migrate, csrf
+from blog.extentions import login_manager, db, migrate, csrf, admin
 from blog import commands
 
 
@@ -23,19 +23,20 @@ def create_app() -> Flask:
 
 
 def register_blueprints(app: Flask):
-    from blog.article.views import article
     from blog.auth.views import auth
-    from blog.user.views import user
+    # from blog.user.views import user
     from blog.main.views import main
     from blog.author.views import author
     from blog.article.views import article
+    # from blog.admin.views import admin_bp
+    from blog.admin.routes import admin
 
-    app.register_blueprint(user)
-    app.register_blueprint(article)
+    # app.register_blueprint(user)
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(author)
-    app.register_blueprint(article)
+    # app.register_blueprint(article)
+    # app.register_blueprint(admin_bp)
 
 
 def register_extensions(app):
@@ -43,6 +44,8 @@ def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
     csrf.init_app(app)
+    admin.init_app(app)
+
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
