@@ -1,14 +1,19 @@
-# from flask import Blueprint
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from flask import redirect, url_for
 from flask_admin import AdminIndexView, expose
 
 
-# admin_bp = Blueprint('admin_bp', __name__, url_prefix='/admin')
-
-
 class CustomAdminView(ModelView):
+    def create_blueprint(self, admin):
+        blueprint = super().create_blueprint(admin)
+        blueprint.name = f'{blueprint.name}_admin'
+        return blueprint
+
+    def get_url(self, endpoint, **kwargs):
+        if not (endpoint.startswith('.') or endpoint.startswith('admin.')):
+            endpoint = endpoint.replace('.', '_admin.')
+        return super().get_url(endpoint, **kwargs)
 
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_staff
@@ -18,7 +23,6 @@ class CustomAdminView(ModelView):
 
 
 class CustomAdminIndexView(AdminIndexView):
-
     @expose()
     def index(self):
         if not (current_user.is_authenticated and current_user.is_staff):

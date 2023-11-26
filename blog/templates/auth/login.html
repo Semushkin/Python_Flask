@@ -18,7 +18,7 @@
         {% for field in ['username', 'password'] %}
             {{ render_field(form[field]) }}
         {% endfor %}
-
+        <a href="{{ url_for('user.register') }}">Registration</a><br>
         {{ form.submit(class="btn btn-primary mb-3") }}
     </form>
 {% endblock %}

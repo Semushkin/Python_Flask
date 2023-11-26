@@ -12,11 +12,11 @@ from blog.models import User
 user = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
 
 
-USERS = {
-    1: 'Alice',
-    2: 'Jon',
-    3: 'Mike',
-}
+# USERS = {
+#     1: 'Alice',
+#     2: 'Jon',
+#     3: 'Mike',
+# }
 
 
 @user.route('register', methods=['GET', 'POST'])
@@ -39,6 +39,7 @@ def register():
         db.session.add(_user)
         db.session.commit()
         login_user(_user)
+        return redirect(url_for('main_page.main_page'))
 
     return render_template(
         'users/register.html',

@@ -1,15 +1,8 @@
-from time import time
-
-from flask import Flask, request, g
-# from flask_login import LoginManager
-# from flask_sqlalchemy import SQLAlchemy
-from blog.models import User
-from blog.extentions import login_manager, db, migrate, csrf, admin
+from flask import Flask
 from blog import commands
 
-
-# db = SQLAlchemy()
-# login_manager = LoginManager()
+from blog.models import User
+from blog.extentions import login_manager, db, migrate, csrf, admin
 
 
 def create_app() -> Flask:
@@ -20,23 +13,6 @@ def create_app() -> Flask:
     register_blueprints(app)
     register_commands(app)
     return app
-
-
-def register_blueprints(app: Flask):
-    from blog.auth.views import auth
-    # from blog.user.views import user
-    from blog.main.views import main
-    from blog.author.views import author
-    from blog.article.views import article
-    # from blog.admin.views import admin_bp
-    from blog.admin.routes import admin
-
-    # app.register_blueprint(user)
-    app.register_blueprint(main)
-    app.register_blueprint(auth)
-    app.register_blueprint(author)
-    # app.register_blueprint(article)
-    # app.register_blueprint(admin_bp)
 
 
 def register_extensions(app):
@@ -52,6 +28,23 @@ def register_extensions(app):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+
+def register_blueprints(app: Flask):
+    from blog.auth.views import auth
+    from blog.user.views import user
+    from blog.main.views import main
+    from blog.author.views import author
+    from blog.article.views import article
+    from blog import admin
+
+    app.register_blueprint(user)
+    app.register_blueprint(main)
+    app.register_blueprint(auth)
+    app.register_blueprint(author)
+    app.register_blueprint(article)
+
+    admin.register_views()
 
 
 def register_commands(app: Flask):

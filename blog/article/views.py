@@ -5,7 +5,6 @@ from werkzeug.exceptions import NotFound
 
 from blog.extentions import db
 from blog.forms.article import CreateArticleForm
-from blog.user.views import USERS
 from blog.models import Article, Author, Tag
 import copy
 
