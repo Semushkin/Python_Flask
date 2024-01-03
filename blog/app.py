@@ -1,3 +1,5 @@
+from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
 from flask import Flask
 from flask_combo_jsonapi import Api
 
@@ -41,7 +43,9 @@ def register_api(app):
     api = Api(
         app=app,
         plugins=[
-            create_api_spec_plugin(app)
+            create_api_spec_plugin(app),
+            EventPlugin(),
+            PermissionPlugin()
         ]
     )
 
