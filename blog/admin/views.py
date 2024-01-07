@@ -45,7 +45,7 @@ class ArticleAdminView(CustomAdminView):
 class UserAdminView(CustomAdminView):
     column_exclude_list = ('password',)
     column_details_exclude_list = ('password',)
-    can_delete = False
+    # can_delete = False
     can_edit = True
     can_view_details = False
     can_create = False
